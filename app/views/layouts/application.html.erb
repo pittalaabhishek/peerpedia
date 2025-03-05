@@ -22,6 +22,18 @@
     <%= javascript_importmap_tags %>
   </head>
 
+  <nav>
+    <% if user_signed_in? %>
+      <%= link_to "Home", root_path %>
+      <%= link_to "Ask a Question", new_question_path %>
+      <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo_confirm: 'Are you sure?'  }  %>
+    <% else %>
+      <%= link_to "Login", new_user_session_path %>
+      <%= link_to "Sign Up", new_user_registration_path %>
+    <% end %>
+  </nav>
+
+
   <body>
     <%= yield %>
   </body>
