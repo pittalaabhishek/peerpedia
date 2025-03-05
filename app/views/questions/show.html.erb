@@ -1,11 +1,29 @@
 <h1><%= @question.body %></h1>
 <p><strong>Asked by:</strong> <%= @question.user.name %></p>
 <hr>
+<% if user_signed_in? %>
+  <h2>Your Answer</h2>
+  <%= form_with model: [@question, Answer.new], local: true do |form| %>
+    <div>
+      <%= form.label :body, "Write your answer" %>
+      <%= form.text_area :body, rows: 5, required: true %>
+    </div>
+    <div>
+      <%= form.submit "Post Answer" %>
+    </div>
+  <% end %>
+<% else %>
+  <p><%= link_to "Log in", new_user_session_path %> or <%= link_to "Sign up", new_user_registration_path %> to post an answer.</p>
+<% end %>
 <h2>Answers</h2>
-<% @question.answers.each do |answer| %>
-  <div class="answer">
-    <p><%= answer.body %></p>
-    <p><small><strong>Answered by:</strong> <%= answer.user.name %></small></p>
-    <hr>
-  </div>
+<% if @question.answers.any? %>
+  <% @question.answers.each do |answer| %>
+    <div class="answer">
+      <p><%= answer.body %></p>
+      <p><small><strong>Answered by:</strong> <%= answer.user.name %></small></p>
+      <hr>
+    </div>
+  <% end %>
+<% else %>
+  <p>No answers yet. Be the first to answer!</p>
 <% end %>

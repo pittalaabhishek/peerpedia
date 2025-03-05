@@ -4,6 +4,10 @@
   <div class="question">
     <p><strong>Asked by:</strong> <%= question.user.name %></p>
     <p><%= question.body %></p>
+
+    <% unless question.user == current_user %>
+        <%= link_to "Answer", question_path(question) %>
+    <% end %>
     <hr>
   </div>
 <% end %>

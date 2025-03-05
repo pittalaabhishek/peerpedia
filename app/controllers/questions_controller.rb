@@ -1,12 +1,17 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [ :new, :create ]
 
   def index
-    @questions = Question.all.order(created_at: :desc)
+    @questions = Question.all.includes(:user).order(created_at: :desc)
   end
 
   def new
     @question = Question.new
+  end
+
+  def show
+    @question = Question.find(params[:id])
+    @answers = @question.answers
   end
 
   def create
