@@ -1,0 +1,11 @@
+<h1><%= @question.body %></h1>
+<p><strong>Asked by:</strong> <%= @question.user.name %></p>
+<hr>
+<h2>Answers</h2>
+<% @question.answers.each do |answer| %>
+  <div class="answer">
+    <p><%= answer.body %></p>
+    <p><small><strong>Answered by:</strong> <%= answer.user.name %></small></p>
+    <hr>
+  </div>
+<% end %>

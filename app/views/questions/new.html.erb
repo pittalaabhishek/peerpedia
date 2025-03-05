@@ -1,0 +1,12 @@
+<h1>Ask a Question</h1>
+
+<%= form_with model: @question, local: true do |form| %>
+  <div>
+    <%= form.label :body, "Your Question" %>
+    <%= form.text_area :body, rows: 5, required: true %>
+  </div>
+
+  <div>
+    <%= form.submit "Post Question" %>
+  </div>
+<% end %>
