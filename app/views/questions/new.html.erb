@@ -3,9 +3,10 @@
 <%= form_with model: @question, local: true do |form| %>
   <div>
     <%= form.label :body, "Your Question" %>
+    <br>
     <%= form.text_area :body, rows: 5, required: true %>
   </div>
-
+  <br>
   <div>
     <%= form.submit "Post Question" %>
   </div>
