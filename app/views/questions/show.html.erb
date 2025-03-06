@@ -1,13 +1,18 @@
 <h1><%= @question.body %></h1>
 <p><strong>Asked by:</strong> <%= @question.user.name %></p>
 <hr>
+
 <% if user_signed_in? %>
   <h2>Your Answer</h2>
   <%= form_with model: [@question, Answer.new], local: true do |form| %>
     <div>
       <%= form.label :body, "Write your answer" %>
+    </div>
+    <br>
+    <div>
       <%= form.text_area :body, rows: 5, required: true %>
     </div>
+    <br>
     <div>
       <%= form.submit "Post Answer" %>
     </div>
@@ -15,14 +20,49 @@
 <% else %>
   <p><%= link_to "Log in", new_user_session_path %> or <%= link_to "Sign up", new_user_registration_path %> to post an answer.</p>
 <% end %>
+
 <h2>Answers</h2>
 <% if @question.answers.any? %>
   <% @question.answers.each do |answer| %>
-    <div class="answer">
+    <div>
       <p><%= answer.body %></p>
       <p><small><strong>Answered by:</strong> <%= answer.user.name %></small></p>
-      <hr>
+      
+      <h3>Comments</h3>
+      <div style="margin-left: 20px;">
+        <% if answer.comments.any? %>
+          <% answer.comments.each do |comment| %>
+            <div style="margin-bottom: 10px;">
+              <p><%= comment.body %></p>
+              <p><small><strong>Commented by:</strong> <%= comment.user.name %></small></p>
+              <% if comment.user == current_user %>
+                <%= link_to "Edit", edit_question_answer_comment_path(@question, answer, comment) %>
+                <%= button_to "Delete", question_answer_comment_path(@question, answer, comment), method: :delete, data: { confirm: "Are you sure?" }%>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <p>No comments yet. Be the first to comment!</p>
+        <% end %>
+      </div>
+      
+      <% if user_signed_in? %>
+        <h4>Add a Comment</h4>
+        <%= form_with model: [@question, answer, Comment.new], local: true do |form| %>
+        
+          <div>
+            <%= form.label :body, "Add your comment" %>
+            <%= form.text_field :body, required: true %>
+          </div>
+          <div>
+            <%= form.submit "Post Comment" %>
+          </div>
+        <% end %>
+      <% else %>
+        <p><%= link_to "Log in", new_user_session_path %> or <%= link_to "Sign up", new_user_registration_path %> to comment.</p>
+      <% end %>
     </div>
+    <hr>
   <% end %>
 <% else %>
   <p>No answers yet. Be the first to answer!</p>
