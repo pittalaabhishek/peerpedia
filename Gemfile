@@ -64,3 +64,6 @@ end
 
 gem "devise"
 gem "byebug"
+
+gem "bootstrap", "~> 5.2"
+gem "sassc-rails"
