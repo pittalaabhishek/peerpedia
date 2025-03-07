@@ -9,7 +9,6 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      puts "Inside saving comment"
       # byebug
       redirect_to question_path(@question), notice: "Comment was successfully created."
     else

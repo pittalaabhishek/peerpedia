@@ -1,13 +1,22 @@
-<h1>All Questions</h1>
+<h1>Home</h1>
 
 <% @questions.each do |question| %>
   <div class="question">
-    <p><strong>Asked by:</strong> <%= question.user.name %></p>
+    <p><strong>Asked by:</strong> <%= question.user == current_user ? "Me" : question.user.name %></p>
     <p><%= question.body %></p>
-
-    <% unless question.user == current_user %>
-        <%= link_to "Answer", question_path(question) %>
+    <% if question.user == current_user %>
+      <div>
+        <%= link_to "Edit", edit_question_path(question) %>
+        <%= button_to "Delete", question_path(question), method: :delete, data: { confirm: "Are you sure you want to delete this question?" } %>
+      </div>
     <% end %>
+    <%= link_to "Answer", question_path(question) %>
+
+    <%# <% unless question.user == current_user %>
+        
+    <%# <% end %>
     <hr>
   </div>
 <% end %>
+
+<%= link_to "New Question", new_question_path %>

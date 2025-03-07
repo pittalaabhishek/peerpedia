@@ -1,5 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_question, only: [ :create, :edit, :update, :destroy ]
+  before_action :set_answer, only: [ :edit, :update, :destroy ]
+  before_action :authorize_user!, only: [ :edit, :update, :destroy ]
 
   def create
     @question = Question.find(params[:question_id])
@@ -13,9 +16,39 @@ class AnswersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @answer.update(answer_params)
+      redirect_to question_path(@question)
+    else
+      render :edit, alert: "There was an issue updating answer. PLease try again."
+    end
+  end
+
+  def destroy
+    @answer.destroy
+    redirect_to question_path(@question)
+  end
+
   private
 
   def answer_params
     params.require(:answer).permit(:body)
+  end
+
+  def set_question
+    @question = Question.find(params[:question_id])
+  end
+
+  def set_answer
+    @answer = @question.answers.find(params[:id])
+  end
+
+  def authorize_user!
+    unless @answer.user == current_user
+      redirect_to question_path(@question), alert: "You are not authorized to perform this action."
+    end
   end
 end
