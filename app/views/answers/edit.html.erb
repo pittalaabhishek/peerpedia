@@ -1,0 +1,15 @@
+<h1>Edit Answer</h1>
+
+<%= form_with model: [@question, @answer], local: true do |form| %>
+  <div>
+    <%= form.label :body, "Your Answer" %>
+    <br>
+    <%= form.text_area :body, rows: 5 %>
+  </div>
+
+  <div>
+    <%= form.submit "Update Answer" %>
+  </div>
+<% end %>
+
+<%= link_to "Back to Question", question_path(@question) %>
