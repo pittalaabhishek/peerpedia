@@ -8,6 +8,25 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
- @import "bootstrap";
- @import "custom";
- @import "devise";
+@import "bootstrap";
+@import "custom";
+@import "devise";
+
+.vote-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+
+.vote-count {
+    font-weight: bold;
+    margin-right: 10px;
+}

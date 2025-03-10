@@ -18,7 +18,7 @@
     </div>
   <% end %>
 <% else %>
-  <p><%= link_to "Log in", new_user_session_path %> or <%= link_to "Sign up", new_user_registration_path %> to post an answer.</p>
+  <p><%= button_to "Log in", new_user_session_path, class: "vote-button" %> or <%= button_to "Sign up", new_user_registration_path, class: "vote-button" %> to post an answer.</p>
 <% end %>
 
 <h2>Answers</h2>
@@ -26,6 +26,20 @@
   <% @question.answers.each do |answer| %>
     <div>
       <p><%= answer.body %></p>
+        <% if user_signed_in? %>
+            <% vote = answer.votes.find_by(user: current_user) %>
+            <% if vote&.value == 1 %>
+              <%= button_to "Unvote", unvote_question_answer_path(@question, answer), method: :delete, class: "vote-button" %>
+            <% else %>
+              <%= button_to "Upvote", upvote_question_answer_path(@question, answer), method: :post, class: "vote-button" %>
+            <% end %>
+            <% if vote&.value == -1 %>
+              <%= button_to "Unvote", unvote_question_answer_path(@question, answer), method: :delete, class: "vote-button" %>
+            <% else %>
+              <%= button_to "Downvote", downvote_question_answer_path(@question, answer), method: :post, class: "vote-button" %>
+            <% end %>
+        <% end %>
+        <span class="vote-count"><%= answer.votes.sum(:value) %> votes</span>
       <p><small><strong>Answered by:</strong> <%= answer.user.name %></small></p>
       <% if answer.user == current_user %>
         <div>
