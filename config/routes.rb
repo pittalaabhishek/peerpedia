@@ -8,6 +8,12 @@ Rails.application.routes.draw do
   resources :questions do
     resources :answers do
       resources :comments, only: [ :create, :edit, :update, :destroy ]
+
+      member do
+        post :upvote, to: "votes#upvote"
+        post :downvote, to: "votes#downvote"
+        delete :unvote, to: "votes#destroy"
+      end
     end
   end
   get "up" => "rails/health#show", as: :rails_health_check
