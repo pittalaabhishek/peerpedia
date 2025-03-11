@@ -27,18 +27,30 @@
     <div>
       <p><%= answer.body %></p>
         <% if user_signed_in? %>
-            <% vote = answer.votes.find_by(user: current_user) %>
+          <% vote = answer.votes.find_by(user: current_user) %>
+          <div class="vote-buttons">
             <% if vote&.value == 1 %>
-              <%= button_to "Unvote", unvote_question_answer_path(@question, answer), method: :delete, class: "vote-button" %>
+              <%= button_to unvote_question_answer_path(@question, answer), method: :delete, class: "vote-button selected" do %>
+                <i class="fa-solid fa-caret-up"></i>
+              <% end %>
             <% else %>
-              <%= button_to "Upvote", upvote_question_answer_path(@question, answer), method: :post, class: "vote-button" %>
+              <%= button_to upvote_question_answer_path(@question, answer), method: :post, class: "vote-button" do %>
+                <i class="fa-solid fa-circle-up"></i>
+              <% end %>
             <% end %>
+
             <% if vote&.value == -1 %>
-              <%= button_to "Unvote", unvote_question_answer_path(@question, answer), method: :delete, class: "vote-button" %>
+              <%= button_to unvote_question_answer_path(@question, answer), method: :delete, class: "vote-button unvote-button" do %>
+                <i class="fa-solid fa-caret-down"></i>
+              <% end %>
             <% else %>
-              <%= button_to "Downvote", downvote_question_answer_path(@question, answer), method: :post, class: "vote-button" %>
+              <%= button_to downvote_question_answer_path(@question, answer), method: :post, class: "vote-button" do %>
+                <i class="fa-solid fa-circle-down"></i>
+              <% end %>
             <% end %>
+          </div>
         <% end %>
+
         <span class="vote-count"><%= answer.votes.sum(:value) %> votes</span>
       <p><small><strong>Answered by:</strong> <%= answer.user.name %></small></p>
       <% if answer.user == current_user %>
