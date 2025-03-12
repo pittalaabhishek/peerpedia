@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: [ :create, :edit, :update, :destroy ]
-  before_action :set_answer, only: [ :edit, :update, :destroy ]
+  before_action :set_answer, only: [ :edit, :update, :destroy, :upvote, :downvote, :unvote ]
   before_action :authorize_user!, only: [ :edit, :update, :destroy ]
 
   def create
@@ -20,15 +20,18 @@ class AnswersController < ApplicationController
   end
 
   def upvote
-    @answer = Answer.find(params[:id])
-    Vote.upvote(@answer, current_user)
-    redirect_to question_path(@answer.question), notice: "Upvoted successfully!"
+    @answer.upvote(current_user)
+    redirect_to question_path(@answer.question)
+  end
+
+  def unvote
+    @answer.unvote(current_user)
+    redirect_to question_path(@answer.question)
   end
 
   def downvote
-    @answer = Answer.find(params[:id])
-    Vote.downvote(@answer, current_user)
-    redirect_to question_path(@answer.question), notice: "Downvoted successfully!"
+    @answer.downvote(current_user)
+    redirect_to question_path(@answer.question)
   end
 
   def update
@@ -55,7 +58,7 @@ class AnswersController < ApplicationController
   end
 
   def set_answer
-    @answer = @question.answers.find(params[:id])
+    @answer = Answer.find(params[:id])
   end
 
   def authorize_user!

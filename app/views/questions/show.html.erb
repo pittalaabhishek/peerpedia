@@ -51,7 +51,7 @@
           </div>
         <% end %>
 
-        <span class="vote-count"><%= answer.votes.sum(:value) %> votes</span>
+        <span class="vote-count"><%= answer.votes.count %> votes</span>
       <p><small><strong>Answered by:</strong> <%= answer.user.name %></small></p>
       <% if answer.user == current_user %>
         <div>
