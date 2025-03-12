@@ -28,6 +28,11 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+
+gem "devise"
+gem "bootstrap", "~> 5.2"
+gem "sassc-rails"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -54,6 +59,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "byebug"
 end
 
 group :test do
@@ -62,8 +68,3 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "devise"
-gem "byebug"
-
-gem "bootstrap", "~> 5.2"
-gem "sassc-rails"

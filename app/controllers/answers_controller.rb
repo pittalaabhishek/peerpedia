@@ -19,6 +19,18 @@ class AnswersController < ApplicationController
   def edit
   end
 
+  def upvote
+    @answer = Answer.find(params[:id])
+    Vote.upvote(@answer, current_user)
+    redirect_to question_path(@answer.question), notice: "Upvoted successfully!"
+  end
+
+  def downvote
+    @answer = Answer.find(params[:id])
+    Vote.downvote(@answer, current_user)
+    redirect_to question_path(@answer.question), notice: "Downvoted successfully!"
+  end
+
   def update
     if @answer.update(answer_params)
       redirect_to question_path(@question)
