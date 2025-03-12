@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       member do
         post :upvote
         post :downvote
-        delete :unvote, to: "votes#destroy"
+        delete :unvote
       end
     end
   end
