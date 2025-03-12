@@ -10,8 +10,8 @@ Rails.application.routes.draw do
       resources :comments, only: [ :create, :edit, :update, :destroy ]
 
       member do
-        post :upvote, to: "votes#upvote"
-        post :downvote, to: "votes#downvote"
+        post :upvote
+        post :downvote
         delete :unvote, to: "votes#destroy"
       end
     end
