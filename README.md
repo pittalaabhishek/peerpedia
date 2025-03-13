@@ -8,9 +8,6 @@ Peerpedia is a collaborative web application where users can create, edit, and s
 
 - **User Authentication**: Sign up, log in, and log out.
 - **Articles**: Create, edit, and delete articles.
-- **Collaboration**: Multiple users can edit articles.
-- **Search**: Search for articles by title or content.
-- **Responsive Design**: Works seamlessly on all devices.
 
 ---
 
