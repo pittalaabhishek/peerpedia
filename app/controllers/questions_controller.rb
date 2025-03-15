@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [ :index ]
-  before_action :set_question, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_question, only: [ :show, :edit, :update, :destroy, :upvote, :downvote, :unvote ]
 
   def index
     @questions = Question.all.includes(:user).order(created_at: :desc)
@@ -11,6 +11,21 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+  end
+
+  def upvote
+    @question.upvote(current_user)
+    redirect_to question_path(@question)
+  end
+
+  def unvote
+    @question.unvote(current_user)
+    redirect_to question_path(@question)
+  end
+
+  def downvote
+    @question.downvote(current_user)
+    redirect_to question_path(@question)
   end
 
   def update
