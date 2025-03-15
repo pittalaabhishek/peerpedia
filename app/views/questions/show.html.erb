@@ -1,25 +1,33 @@
 <h1><%= @question.body %></h1>
 <p><strong>Asked by:</strong> <%= @question.user.name %></p>
-<hr>
 
 <% if user_signed_in? %>
-  <h2>Your Answer</h2>
-  <%= form_with model: [@question, Answer.new], local: true do |form| %>
-    <div>
-      <%= form.label :body, "Write your answer" %>
-    </div>
-    <br>
-    <div>
-      <%= form.text_area :body, rows: 5, required: true %>
-    </div>
-    <br>
-    <div>
-      <%= form.submit "Post Answer" %>
-    </div>
-  <% end %>
-<% else %>
-  <p><%= button_to "Log in", new_user_session_path, class: "vote-button" %> or <%= button_to "Sign up", new_user_registration_path, class: "vote-button" %> to post an answer.</p>
+  <div class="vote-buttons">
+    <% vote = @question.votes.find_by(user: current_user) %>
+    <% if vote&.value == 1 %>
+      <%= button_to unvote_question_path(@question), method: :delete, class: "vote-button selected" do %>
+        <i class="fa-solid fa-caret-up"></i>
+      <% end %>
+    <% else %>
+      <%= button_to upvote_question_path(@question), method: :post, class: "vote-button" do %>
+        <i class="fa-solid fa-circle-up"></i>
+      <% end %>
+    <% end %>
+
+    <% if vote&.value == -1 %>
+      <%= button_to unvote_question_path(@question), method: :delete, class: "vote-button unvote-button" do %>
+        <i class="fa-solid fa-caret-down"></i>
+      <% end %>
+    <% else %>
+      <%= button_to downvote_question_path(@question), method: :post, class: "vote-button" do %>
+        <i class="fa-solid fa-circle-down"></i>
+      <% end %>
+    <% end %>
+  </div>
 <% end %>
+
+<span class="vote-count"><%= @question.votes.count %> votes</span>
+<hr>
 
 <h2>Answers</h2>
 <% if @question.answers.any? %>

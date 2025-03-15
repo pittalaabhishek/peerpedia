@@ -6,6 +6,12 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   root "questions#index"
   resources :questions do
+    member do
+      post :upvote
+      post :downvote
+      delete :unvote
+    end
+
     resources :answers do
       resources :comments, only: [ :create, :edit, :update, :destroy ]
 

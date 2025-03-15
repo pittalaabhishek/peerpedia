@@ -2,28 +2,26 @@ class Answer < ApplicationRecord
   belongs_to :user
   belongs_to :question
   has_many :comments, dependent: :destroy
-  has_many :votes, dependent: :destroy
+  has_many :votes, as: :votable, class_name: "AnswerVote", dependent: :destroy
 
   validates :body, presence: true, length: { minimum: 1 }
   default_scope { order(created_at: :desc) }
 
   # Upvote an answer for a user
   def upvote(user)
-    vote = self.votes.find_or_initialize_by(user: user)
-    vote.value = 1
-    vote.save
+    vote = votes.find_or_initialize_by(user: user)
+    vote.upvote
   end
 
   # Downvote an answer for a user
   def downvote(user)
-    vote = self.votes.find_or_initialize_by(user: user)
-    vote.value = -1
-    vote.save
+    vote = votes.find_or_initialize_by(user: user)
+    vote.downvote
   end
 
-  # UNvote an answer for a user
+  # Unvote an answer for a user
   def unvote(user)
-    vote = self.votes.find_by(user: user)
-    vote&.destroy
+    vote = votes.find_by(user: user)
+    vote&.unvote
   end
 end
