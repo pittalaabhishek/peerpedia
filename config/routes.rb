@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       post :downvote
       delete :unvote
     end
-    
+
     resources :answers do
       resources :comments, only: [ :create, :edit, :update, :destroy ]
 
