@@ -10,4 +10,5 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :bio, presence: true, length: { maximum: 250 }
+  validates :password, presence: true
 end
