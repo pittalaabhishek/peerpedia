@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all.includes(:user).order(created_at: :desc)
+    response.headers["Cache-Control"] = "no-store"
   end
 
   def new
