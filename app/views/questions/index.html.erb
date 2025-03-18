@@ -3,7 +3,8 @@
 <% @questions.each do |question| %>
   <div class="question">
     <p><strong>Asked by:</strong> <%= question.user == current_user ? "Me" : question.user.name %></p>
-    <p><%= question.body %></p>
+    <p><%= question.body %><span class="vote-count"><%= question.question_votes.count %> votes</span>
+</p>
     <% if question.user == current_user %>
       <div>
         <%= link_to "Edit", edit_question_path(question) %>
@@ -11,10 +12,6 @@
       </div>
     <% end %>
     <%= link_to "Answer", question_path(question) %>
-
-    <%# <% unless question.user == current_user %>
-        
-    <%# <% end %>
     <hr>
   </div>
 <% end %>
