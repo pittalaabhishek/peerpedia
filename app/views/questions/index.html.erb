@@ -3,7 +3,8 @@
 <% @questions.each do |question| %>
   <div class="question">
     <p><strong>Asked by:</strong> <%= question.user == current_user ? "Me" : question.user.name %></p>
-    <p><%= question.body %><span class="vote-count"><%= question.votes.count %> votes</span></p>
+    <p><%= question.body %><span class="vote-count"><%= question.question_votes.count %> votes</span>
+</p>
     <% if question.user == current_user %>
       <%= link_to "Edit", edit_question_path(question) %>
       <%= button_to "Delete", question_path(question), method: :delete, onclick: "return confirm('Are you sure you want to delete this question?')" ;%>
