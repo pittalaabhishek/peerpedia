@@ -1,10 +1,10 @@
 # lib/tasks/csv_to_json.rake
-require 'csv'
-require 'json'
+require "csv"
+require "json"
 
 namespace :convert do
   desc "Convert a CSV file to JSON"
-  task :csv_to_json, [:input_file, :output_file] => :environment do |task, args|
+  task :csv_to_json, [ :input_file, :output_file ] => :environment do |task, args|
     input_file = args[:input_file]
     output_file = args[:output_file]
 
@@ -17,7 +17,7 @@ namespace :convert do
 
     json_data = csv_data.map(&:to_hash)
 
-    File.open(output_file, 'w') do |file|
+    File.open(output_file, "w") do |file|
       file.write(JSON.pretty_generate(json_data))
     end
 
