@@ -30,7 +30,7 @@ gem "solid_cable"
 
 
 gem "devise"
-gem "bootstrap", "~> 5.2"
+gem "bootstrap", "~> 5.3"
 gem "sassc-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
